@@ -19,8 +19,8 @@ def getRecipe(url):
     elems = soup.select("#recipe-notes > span.recipe-directions--print > a")#css selector 
     print(soup.title)
 
-def clean(str): # removes all the beginning tags 
-    
+#def clean(str): # removes all the beginning tags 
+
     
 url = input("imput url")
 
@@ -35,7 +35,7 @@ print(foods)
 quantity = soup.find_all("span",{"class:","wprm-recipe-ingredient-amount"})
 print(quantity)
 unit = soup.find_all("span",{"class","wprm-recipe-ingredient-unit"})
-print(foods[0])
+print(foods[0].text)
 print(quantity[0])
 print(unit[0])
 
