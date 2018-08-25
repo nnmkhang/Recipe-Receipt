@@ -27,21 +27,40 @@ url = input("imput url")
 res = requests.get(url)
 res.raise_for_status()
 soup = bs4.BeautifulSoup(res.text,"html.parser")
-ingredients = soup.find_all("ul",{"class:","wprm-recipe-ingredients"}) # stored as an array
+#ingredients = soup.find_all("ul",{"class:","wprm-recipe-ingredients"}) # stored as an array
 #elems = soup.select("#wprm-recipe-container > div > div.wprm-recipe-ingredients-container > div > ul") 
 #print(ingredients) # will print all of the ingredients sub divided into its seperate  <li> components 
 foods = soup.find_all("span",{"class:", "wprm-recipe-ingredient-name"}) #gets the ingredient names 
-print(foods)
 quantity = soup.find_all("span",{"class:","wprm-recipe-ingredient-amount"})
-print(quantity)
 unit = soup.find_all("span",{"class","wprm-recipe-ingredient-unit"})
-print(foods[0].text)
-print(quantity[0])
-print(unit[0])
+
+print("\n"+soup.title.text+"\n")
+print("Ingredients:")
+
+
+
+ingredients = ""
+for x in range(len(unit)):
+    #print(quantity[x].text,unit[x].text,foods[x].text)
+    ingredients = ingredients + quantity[x].text +" " +unit[x].text + " " + foods[x].text + "\n"
+
+
+instruction_list = soup.find_all("div",{"class:","wprm-recipe-instruction-text"})
+
+instructions = ""
+for x in range(len(instruction_list)):
+    instructions = instructions + str(x + 1) + ": " + instruction_list[x].text + "\n"
+
+print(ingredients)    
+print(instructions)
+
+
+
+
 
 
 # need to make a dictonary that stores all of the foods and the ingredeints in a list.
 # dictonary will hold the ingredient name and its quantity. This will make finding the calories later easier as well
 
-print(len(ingredients))
+#print(len(ingredients))
 
