@@ -54,6 +54,11 @@ for x in range(len(instruction_list)):
 print(ingredients)    
 print(instructions)
 
+# USDA API KEY GFmojzmt8TKjAQNurSRBZTi1GTkAD2FCkDbliAXY
+# EXAMPLE GIVEN: https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=GFmojzmt8TKjAQNurSRBZTi1GTkAD2FCkDbliAXY&location=Denver+CO
+# maybe use an online python library to parse all of the nutrition data from USDA website 
+# or u can parse it yourself and learn about JSON files 
+
 
 
 
