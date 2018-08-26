@@ -39,8 +39,26 @@ if(website == "www.budgetbytes.com"):
     print("Ingredients:")
 
 
+
+    
     for x in range(len(unit)):
-        ingredients = ingredients + quantity[x].text +" " +unit[x].text + " " + foods[x].text + "\n"
+        unit[x] = unit[x].text
+    
+    for x in range(len(quantity)):
+        quantity[x] = quantity[x].text
+
+    for x in range(len(foods)): # have to have each seperate since sometimes there is no quanitiy or unit avaliable ex: freshly cracked pepper
+        foods[x] = foods[x].text
+        ingredients = ingredients + quantity[x] +" " +unit[x]+ " " + foods[x]+ "\n"
+    
+    
+    
+    
+    print(foods)
+    print(unit)
+    print(quantity)
+    print(ingredients)
+
 
     instruction_list = soup.find_all("div",{"class:","wprm-recipe-instruction-text"})
 
@@ -50,6 +68,8 @@ if(website == "www.budgetbytes.com"):
 elif(website == "www.thecookingguy.com"):
     recipe_div = soup.find("div",{"class:","sqs-block html-block sqs-block-html"})
     #print(recipe_div)
+
+    #finds the ul tag within the larger div tag
     for ingredients_list in recipe_div:
         ingredients_list = recipe_div.find("ul")
         for ingredients_list_entry in ingredients_list:
@@ -58,14 +78,23 @@ elif(website == "www.thecookingguy.com"):
 
 
 
+    unit = []
+    foods = []
+    quantity = []
 
     for x in range(len(ingredients_list_entry)):
-        print(ingredients_list_entry[x].text)
+        #print(ingredients_list_entry[x].text)
+
+        quantity.append(ingredients_list_entry[x].text.split(" ",2)[0])
+        unit.append(ingredients_list_entry[x].text.split(" ",2)[1])
+        foods.append(ingredients_list_entry[x].text.split(" ",2)[2])
         type(ingredients_list_entry[x].text)
         #print(ingredients_list[x].text.split("",2))
    # print(foods)
     #print(len(foods))
-
+    print(foods)
+    print(unit)
+    print(quantity)
 
 elif(website == "www.allrecipes.com"):
     print("test2")
