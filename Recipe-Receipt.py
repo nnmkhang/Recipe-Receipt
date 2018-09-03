@@ -26,37 +26,56 @@ print(website)
 ingredients = ""
 instructions = ""
 
-if(website == "www.budgetbytes.com"):
+if(website == "www.budgetbytes.com"): #budget bytes has very nice HTML making the parsing process very straight foward
     #ingredients = soup.find_all("ul",{"class:","wprm-recipe-ingredients"}) # stored as an array
     #elems = soup.select("#wprm-recipe-container > div > div.wprm-recipe-ingredients-container > div > ul") 
     #print(ingredients) # will print all of the ingredients sub divided into its seperate  <li> components 
-    foods = soup.find_all("span",{"class:", "wprm-recipe-ingredient-name"}) #gets the ingredient names 
-    quantity = soup.find_all("span",{"class:","wprm-recipe-ingredient-amount"})
-    unit = soup.find_all("span",{"class","wprm-recipe-ingredient-unit"})
+
+
+    # finds the ul tag containing the ingredients and then cylcecs trough all of the children belongning to the parent tag.
+    # in each li tag, the span corrisponding to the name, amount and unit of each ingredient is appended to an array that 
+    # stores each respectivly.
+
+    table = soup.find("ul",{"class:","wprm-recipe-ingredients"})
+    
+    foods = []
+    quantity = []
+    unit = []   
+
+    for li in table.findChildren("li"):
+
+        amount = li.find("span",{"class:","wprm-recipe-ingredient-amount"})
+        if(amount is None):
+            quanitiy.append(" ")
+        else:
+            quantity.append(amount.text)
+
+        u = li.find("span",{"class:","wprm-recipe-ingredient-unit"}) # u representing unit
+        if(u is None):
+            unit.append(" ")
+        else:
+            unit.append(u.text)
+
+
+        name = li.find("span",{"class:","wprm-recipe-ingredient-name"})
+        if(name is None):
+            foods.append(" ")
+        else:
+            foods.append(name.text)
+
+   
+
 
 
     print("\n"+soup.title.text+"\n")
     print("Ingredients:")
-
-
-
-    
-    for x in range(len(unit)):
-        unit[x] = unit[x].text
-    
-    for x in range(len(quantity)):
-        quantity[x] = quantity[x].text
-
-    for x in range(len(foods)): # have to have each seperate since sometimes there is no quanitiy or unit avaliable ex: freshly cracked pepper
-        foods[x] = foods[x].text
-        ingredients = ingredients + quantity[x] +" " +unit[x]+ " " + foods[x]+ "\n"
-    
-    
-    
     
     print(foods)
+    print(len(foods))
     print(unit)
+    print(len(unit))
     print(quantity)
+    print(len(quantity))
     print(ingredients)
 
 
