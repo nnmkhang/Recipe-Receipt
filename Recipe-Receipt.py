@@ -46,20 +46,20 @@ if(website == "www.budgetbytes.com"): #budget bytes has very nice HTML making th
 
         amount = li.find("span",{"class:","wprm-recipe-ingredient-amount"})
         if(amount is None):
-            quanitiy.append(" ")
+            quanitiy.append("")
         else:
             quantity.append(amount.text)
 
         u = li.find("span",{"class:","wprm-recipe-ingredient-unit"}) # u representing unit
         if(u is None):
-            unit.append(" ")
+            unit.append("")
         else:
             unit.append(u.text)
 
 
         name = li.find("span",{"class:","wprm-recipe-ingredient-name"})
         if(name is None):
-            foods.append(" ")
+            foods.append("")
         else:
             foods.append(name.text)
 
@@ -70,21 +70,17 @@ if(website == "www.budgetbytes.com"): #budget bytes has very nice HTML making th
     print("\n"+soup.title.text+"\n")
     print("Ingredients:")
     
-    print(foods)
-    print(len(foods))
-    print(unit)
-    print(len(unit))
-    print(quantity)
-    print(len(quantity))
-    print(ingredients)
+   
+   
+    for x in range(len(foods)): # puts all of the ingredients into a string
+        ingredients = ingredients + quantity[x] + " " + unit[x] + " " + foods[x] + " \n"
 
-
-    instruction_list = soup.find_all("div",{"class:","wprm-recipe-instruction-text"})
-
-    for x in range(len(instruction_list)):
+    instruction_list = soup.find_all("div",{"class:","wprm-recipe-instruction-text"}) # puts the instructions into a string 
+    for x in range(len(instruction_list)): 
         instructions = instructions + str(x + 1) + ": " + instruction_list[x].text + "\n"
 
-elif(website == "www.thecookingguy.com"):
+
+elif(website == "www.thecookingguy.com"): # unable to do calories for these dishes becasue the format changes from each recipe
     recipe_div = soup.find("div",{"class:","sqs-block html-block sqs-block-html"})
     #print(recipe_div)
 
@@ -93,6 +89,9 @@ elif(website == "www.thecookingguy.com"):
         ingredients_list = recipe_div.find("ul")
         for ingredients_list_entry in ingredients_list:
             ingredients_list_entry = ingredients_list.find_all("li")
+        instructions_list = recipe_div.find("ol")
+        for instructions_list_entry in instructions_list:
+            instructions_list_entry = instructions_list.find_all("li")
     
 
 
@@ -100,23 +99,35 @@ elif(website == "www.thecookingguy.com"):
     unit = []
     foods = []
     quantity = []
-
+    print (soup.title.text)
     for x in range(len(ingredients_list_entry)):
         #print(ingredients_list_entry[x].text)
 
         quantity.append(ingredients_list_entry[x].text.split(" ",2)[0])
         unit.append(ingredients_list_entry[x].text.split(" ",2)[1])
         foods.append(ingredients_list_entry[x].text.split(" ",2)[2])
-        type(ingredients_list_entry[x].text)
-        #print(ingredients_list[x].text.split("",2))
-   # print(foods)
-    #print(len(foods))
-    print(foods)
-    print(unit)
-    print(quantity)
 
-elif(website == "www.allrecipes.com"):
-    print("test2")
+    for x in range(len(foods)):
+        ingredients = ingredients + quantity[x] + " " + unit[x] + " " + foods[x] + "\n"
+    
+  
+    
+
+
+    for x in range(len(instructions_list_entry)):
+        instructions = instructions + str( x + 1 ) + ": " + instructions_list_entry[x].text + "\n"
+    
+
+    
+
+elif(website == "www.allrecipes.com"): # all recipes is nice enough to include the nutritional facts for their recipes '
+
+    nutrition_summary = soup.find("div",{"class:","nutrition-summary-facts"})
+    nutrition_entries = nutrition_summary.finda_all("span")
+    
+    print(nutrition_entries)
+    print(len(nutrition_entries))
+
 
 print(ingredients)    
 print(instructions)
