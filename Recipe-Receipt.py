@@ -123,10 +123,23 @@ elif(website == "www.thecookingguy.com"): # unable to do calories for these dish
 elif(website == "www.allrecipes.com"): # all recipes is nice enough to include the nutritional facts for their recipes '
 
     nutrition_summary = soup.find("div",{"class:","nutrition-summary-facts"})
-    nutrition_entries = nutrition_summary.finda_all("span")
+    nutrition_entries = nutrition_summary.find_all("span")
+    nutrition = ""
+    for x in range(len(nutrition_entries)):
+        nutrition = nutrition  + nutrition_entries[x].text + " " 
     
-    print(nutrition_entries)
-    print(len(nutrition_entries))
+    ingredients_list = soup.find_all("li",{"class:","checkList__line"})
+
+
+    print(nutrition)
+    for x in range(len(ingredients_list)-3):
+        s = ingredients_list[x].text
+        s.replace("\n","")
+        ingredients = ingredients + " " + s
+    
+    instruction_list = soup.find_all("li",{"class:","step"})
+    for x in range(len(instruction_list)):
+        print(instruction_list[x].text)
 
 
 print(ingredients)    
@@ -135,7 +148,7 @@ print(instructions)
 # USDA API KEY GFmojzmt8TKjAQNurSRBZTi1GTkAD2FCkDbliAXY
 # EXAMPLE GIVEN: https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=GFmojzmt8TKjAQNurSRBZTi1GTkAD2FCkDbliAXY&location=Denver+CO
 # maybe use an online python library to parse all of the nutrition data from USDA website 
-# or u can parse it yourself and learn about JSON files 
+# or u can parse it yourself and learn about JSON files s
 
 
 
